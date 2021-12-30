@@ -1,0 +1,11 @@
+{
+  "type": "tfc:heating",
+  "ingredient": {
+    "item": "terraantiqua:ore/rich_orpiment"
+  },
+  "result_fluid": {
+    "fluid": "terraantiqua:metal/arsenic",
+    "amount": 35
+  },
+  "temperature": 613
+}

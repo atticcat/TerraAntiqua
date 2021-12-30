@@ -1,0 +1,6 @@
+{
+  "tier": 1,
+  "fluid": "terraantiqua:metal/arsenic",
+  "melt_temperature": 613,
+  "heat_capacity": 0.33
+}

@@ -1,0 +1,11 @@
+{
+  "type": "tfc:heating",
+  "ingredient": {
+    "item": "terraantiqua:ore/normal_realgar"
+  },
+  "result_fluid": {
+    "fluid": "terraantiqua:metal/arsenic",
+    "amount": 25
+  },
+  "temperature": 613
+}

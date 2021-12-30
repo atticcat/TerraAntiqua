@@ -1,0 +1,16 @@
+{
+  "ingredient": [
+    {
+      "item": "terraantiqua:ore/normal_realgar"
+    },
+    {
+      "item": "terraantiqua:ore/poor_realgar"
+    },
+    {
+      "item": "terraantiqua:ore/rich_realgar"
+    }
+  ],
+  "heat_capacity": 0.33,
+  "forging_temperature": 347.0,
+  "welding_temperature": 480.0
+}

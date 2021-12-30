@@ -1,0 +1,21 @@
+{
+  "item.terraantiqua.mud": "Mud",
+  "item.terraantiqua.ceramic.wet_mudbrick": "Wet Mudbrick",
+  "item.terraantiqua.ceramic.mudbrick": "Mudbrick",
+  "item.terraantiqua.ceramic.mudbricks": "Mudbricks",
+
+  "item.terraantiqua.ore.poor_galena": "Poor Galena",
+  "item.terraantiqua.ore.normal_galena": "Normal Galena",
+  "item.terraantiqua.ore.rich_galena": "Rich Galena",
+  "item.terraantiqua.ore.poor_orpiment": "Poor Orpiment",
+  "item.terraantiqua.ore.normal_orpiment": "Normal Orpiment",
+  "item.terraantiqua.ore.rich_orpiment": "Rich Orpiment",
+  "item.terraantiqua.ore.poor_realgar": "Poor Realgar",
+  "item.terraantiqua.ore.normal_realgar": "Normal Realgar",
+  "item.terraantiqua.ore.rich_realgar": "Rich Realgar",
+
+  "metal.tfc.arsenic": "Arsenic",
+  "metal.tfc.arsenical_bronze": "Arsenical Bronze",
+  "metal.tfc.lead": "Lead",
+  "metal.tfc.pewter": "Pewter"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "tfc:heating",
+  "ingredient": {
+    "item": "terraantiqua:ore/normal_galena"
+  },
+  "result_fluid": {
+    "fluid": "terraantiqua:metal/lead",
+    "amount": 25
+  },
+  "temperature": 328
+}

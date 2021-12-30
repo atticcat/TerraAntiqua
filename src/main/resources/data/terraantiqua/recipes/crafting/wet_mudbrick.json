@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "terraantiqua:mud"
+    },
+    {
+      "item": "tfc:straw"
+    }
+  ],
+  "result": {
+    "item": "terraantiqua:ceramic/wet_mudbrick"
+  }
+}

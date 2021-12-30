@@ -1,0 +1,16 @@
+{
+  "ingredient": [
+    {
+      "item": "terraantiqua:ore/normal_galena"
+    },
+    {
+      "item": "terraantiqua:ore/poor_galena"
+    },
+    {
+      "item": "terraantiqua:ore/rich_galena"
+    }
+  ],
+  "heat_capacity": 0.13,
+  "forging_temperature": 147.0,
+  "welding_temperature": 238.0
+}

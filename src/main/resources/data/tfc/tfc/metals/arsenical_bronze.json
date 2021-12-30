@@ -1,0 +1,6 @@
+{
+  "tier": 2,
+  "fluid": "terraantiqua:metal/arsenical_bronze",
+  "melt_temperature": 920,
+  "heat_capacity": 0.35
+}

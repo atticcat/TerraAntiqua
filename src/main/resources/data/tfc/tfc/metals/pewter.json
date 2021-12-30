@@ -1,0 +1,6 @@
+{
+  "tier": 1,
+  "fluid": "terraantiqua:metal/pewter",
+  "melt_temperature": 240,
+  "heat_capacity": 0.22
+}

@@ -1,0 +1,21 @@
+{
+  "type": "tfc:alloy",
+  "result": "terraantiqua:metal/arsenical_bronze",
+  "contents": [
+    {
+      "metal": "tfc:metal/tin",
+      "min": 0,
+      "max": 0.05
+    },
+    {
+      "metal": "tfc:metal/copper",
+      "min": 0.75,
+      "max": 0.95
+    },
+    {
+      "metal": "terraantiqua:metal/arsenic",
+      "min": 0.05,
+      "max": 0.2
+    }
+  ]
+}

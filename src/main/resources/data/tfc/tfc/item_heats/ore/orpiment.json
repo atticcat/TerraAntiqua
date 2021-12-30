@@ -1,0 +1,16 @@
+{
+  "ingredient": [
+    {
+      "item": "terraantiqua:ore/normal_orpiment"
+    },
+    {
+      "item": "terraantiqua:ore/poor_orpiment"
+    },
+    {
+      "item": "terraantiqua:ore/rich_orpiment"
+    }
+  ],
+  "heat_capacity": 0.33,
+  "forging_temperature": 347.0,
+  "welding_temperature": 480.0
+}

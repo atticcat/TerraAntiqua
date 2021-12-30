@@ -1,0 +1,21 @@
+{
+  "type": "tfc:alloy",
+  "result": "terraantiqua:metal/pewter",
+  "contents": [
+    {
+      "metal": "tfc:tin",
+      "min": 0.8,
+      "max": 0.95
+    },
+    {
+      "metal": "terraantiqua:metal/lead",
+      "min": 0.05,
+      "max": 0.15
+    },
+    {
+      "metal": "tfc:metal/copper",
+      "min": 0,
+      "max": 0.05
+    }
+  ]
+}

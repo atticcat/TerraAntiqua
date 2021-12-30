@@ -1,0 +1,20 @@
+{
+  "textures": {
+    "lit": "tfc:block/devices/firepit/base_lit",
+    "particle": "tfc:block/devices/firepit/base_lit"
+  },
+  "elements": [
+    {
+      "from": [-4, -1.5, -1.5],
+      "to": [4, 1.5, 1.5],
+      "faces": {
+        "north": {"uv": [0, 12, 8, 15], "texture": "#lit"},
+        "east": {"uv": [9, 12, 12, 15], "texture": "#lit"},
+        "south": {"uv": [3, 12, 11, 15], "texture": "#lit"},
+        "west": {"uv": [5, 12, 8, 15], "texture": "#lit"},
+        "up": {"uv": [2, 13, 10, 16], "texture": "#lit"},
+        "down": {"uv": [0, 13, 8, 16], "texture": "#lit"}
+      }
+    }
+  ]
+}

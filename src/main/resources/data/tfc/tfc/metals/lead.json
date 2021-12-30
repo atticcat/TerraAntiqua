@@ -1,0 +1,6 @@
+{
+  "tier": 1,
+  "fluid": "terraantiqua:metal/lead",
+  "melt_temperature": 328,
+  "heat_capacity": 0.13
+}
