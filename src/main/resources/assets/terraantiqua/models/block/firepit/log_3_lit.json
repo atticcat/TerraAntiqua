@@ -1,0 +1,22 @@
+{
+  "textures": {
+    "lit": "tfc:block/devices/firepit/base_lit",
+    "particle": "tfc:block/devices/firepit/base_lit"
+  },
+  "elements": [
+    {
+      "name": "Log3",
+      "from": [4, 0, 5],
+      "to": [7, 3, 13],
+      "rotation": {"angle": -22.5, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [4, 12, 7, 15], "texture": "#lit"},
+        "east": {"uv": [4, 13, 12, 16], "texture": "#lit"},
+        "south": {"uv": [7, 12, 10, 15], "texture": "#lit"},
+        "west": {"uv": [3, 12, 11, 15], "texture": "#lit"},
+        "up": {"uv": [3, 13, 11, 16], "rotation": 90, "texture": "#lit"},
+        "down": {"uv": [0, 12, 8, 15], "rotation": 90, "texture": "#lit"}
+      }
+    }
+  ]
+}

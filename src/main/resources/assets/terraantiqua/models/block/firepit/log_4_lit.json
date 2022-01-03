@@ -1,0 +1,22 @@
+{
+  "textures": {
+    "lit": "tfc:block/devices/firepit/base_lit",
+    "particle": "tfc:block/devices/firepit/base_lit"
+  },
+  "elements": [
+    {
+      "name": "Log4TopHoriz",
+      "from": [4, 3, 3],
+      "to": [7, 6, 11],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [2, 12, 5, 15], "texture": "#lit"},
+        "east": {"uv": [3, 12, 11, 15], "texture": "#lit"},
+        "south": {"uv": [5, 12, 8, 15], "texture": "#lit"},
+        "west": {"uv": [4, 12, 12, 15], "texture": "#lit"},
+        "up": {"uv": [0, 13, 8, 16], "rotation": 90, "texture": "#lit"},
+        "down": {"uv": [1, 13, 9, 16], "texture": "#lit"}
+      }
+    }
+  ]
+}

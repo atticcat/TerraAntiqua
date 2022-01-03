@@ -32,6 +32,8 @@ public class TerraAntiqua {
         AntiquaBlockEntities.TILE_ENTITIES.register(bus);
         AntiquaContainerTypes.CONTAINERS.register(bus);
 
+        ForgeEventHandler.init();
+
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientEventHandler.init();
         }

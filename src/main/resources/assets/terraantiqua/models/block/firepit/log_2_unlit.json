@@ -1,0 +1,22 @@
+{
+  "textures": {
+    "unlit": "tfc:block/devices/firepit/base",
+    "particle": "tfc:block/devices/firepit/base"
+  },
+  "elements": [
+    {
+      "name": "Log2TopSlant",
+      "from": [10, 3, 1],
+      "to": [13, 6, 9],
+      "rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [2, 12, 5, 15], "texture": "#unlit"},
+        "east": {"uv": [3, 12, 11, 15], "texture": "#unlit"},
+        "south": {"uv": [5, 12, 8, 15], "texture": "#unlit"},
+        "west": {"uv": [4, 12, 12, 15], "texture": "#unlit"},
+        "up": {"uv": [0, 13, 8, 16], "rotation": 90, "texture": "#unlit"},
+        "down": {"uv": [1, 13, 9, 16], "rotation": 90, "texture": "#unlit"}
+      }
+    }
+  ]
+}

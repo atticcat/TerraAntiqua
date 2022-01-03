@@ -1,10 +1,146 @@
 {
-  "variants": {
-    "lit=true": {
-      "model": "tfc:block/firepit_lit"
+  "multipart": [
+    {
+      "when": {
+        "lit": true
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/stones_lit"
+      }
     },
-    "lit=false": {
-      "model": "tfc:block/firepit_unlit"
+    {
+      "when": {
+        "lit": false
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/stones_unlit"
+      }
+    },
+    {
+      "when": {
+        "lit": true,
+        "has_wood_ash": false
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/base_lit"
+      }
+    },
+    {
+      "when": {
+        "lit": false,
+        "has_wood_ash": false
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/base_unlit"
+      }
+    },
+    {
+      "when": {
+        "lit": true,
+        "has_wood_ash": true
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/ash_lit"
+      }
+    },
+    {
+      "when": {
+        "lit": false,
+        "has_wood_ash": true
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/ash_unlit"
+      }
+    },
+    {
+      "when": {
+        "lit": true,
+        "num_logs": 4
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_4_lit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": true, "num_logs": 3},
+          {"lit": true, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_3_lit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": true, "num_logs": 2},
+          {"lit": true, "num_logs": 3},
+          {"lit": true, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_2_lit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": true, "num_logs": 1},
+          {"lit": true, "num_logs": 2},
+          {"lit": true, "num_logs": 3},
+          {"lit": true, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_1_lit"
+      }
+    },
+    {
+      "when": {
+        "lit": false,
+        "num_logs": 4
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_4_unlit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": false, "num_logs": 3},
+          {"lit": false, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_3_unlit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": false, "num_logs": 2},
+          {"lit": false, "num_logs": 3},
+          {"lit": false, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_2_unlit"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"lit": false, "num_logs": 1},
+          {"lit": false, "num_logs": 2},
+          {"lit": false, "num_logs": 3},
+          {"lit": false, "num_logs": 4}
+        ]
+      },
+      "apply": {
+        "model": "terraantiqua:block/firepit/log_1_unlit"
+      }
     }
-  }
+  ]
 }

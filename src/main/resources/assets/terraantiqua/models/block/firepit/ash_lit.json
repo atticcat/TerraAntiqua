@@ -1,0 +1,59 @@
+{
+  "textures": {
+    "lit": "terraantiqua:block/devices/firepit/ash_lit",
+    "particle": "terraantiqua:block/devices/firepit/ash_lit"
+  },
+  "elements": [
+    {
+      "name": "Coals",
+      "from": [2, 0, 2],
+      "to": [14, 0.1, 14],
+      "faces": {
+        "up": {"uv": [0, 0, 12, 12], "texture": "#lit"},
+        "down": {"uv": [0, 0, 12, 12], "texture": "#lit"}
+      }
+    },
+    {
+      "name": "Coal1",
+      "from": [5, 0, 9.5],
+      "to": [11, 0.7, 11.5],
+      "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [6, 0, 12, 1], "texture": "#lit"},
+        "south": {"uv": [6, 0, 12, 1], "texture": "#lit"},
+        "east": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "west": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "up": {"uv": [6, 0, 12, 2], "texture": "#lit"},
+        "down": {"uv": [6, 0, 12, 2], "texture": "#lit"}
+      }
+    },
+    {
+      "name": "Coal2",
+      "from": [10.5, 0, 5.5],
+      "to": [12.5, 0.5, 10],
+      "rotation": {"angle": 22.5, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "south": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "east": {"uv": [7.5, 0, 12, 1], "texture": "#lit"},
+        "west": {"uv": [7.5, 0, 12, 1], "texture": "#lit"},
+        "up": {"uv": [2, 0, 4, 4.5], "texture": "#lit"},
+        "down": {"uv": [2, 0, 4, 4.5], "texture": "#lit"}
+      }
+    },
+    {
+      "name": "Coal3",
+      "from": [4.5, 0, 7],
+      "to": [6.5, 0.5, 11],
+      "rotation": {"angle": -22.5, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "south": {"uv": [10, 0, 12, 1], "texture": "#lit"},
+        "east": {"uv": [7.5, 0, 12, 1], "texture": "#lit"},
+        "west": {"uv": [7.5, 0, 12, 1], "texture": "#lit"},
+        "up": {"uv": [2, 7, 4, 11], "texture": "#lit"},
+        "down": {"uv": [2, 7, 4, 11], "texture": "#lit"}
+      }
+    }
+  ]
+}

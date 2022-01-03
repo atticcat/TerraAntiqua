@@ -5,15 +5,6 @@
   },
   "elements": [
     {
-      "name": "Coals",
-      "from": [2, 0, 2],
-      "to": [14, 0.1, 14],
-      "faces": {
-        "up": {"uv": [0, 0, 12, 12], "texture": "#lit"},
-        "down": {"uv": [0, 0, 12, 12], "texture": "#lit"}
-      }
-    },
-    {
       "name": "rock1",
       "from": [0, 0, 0.5],
       "to": [3, 1.5, 3],

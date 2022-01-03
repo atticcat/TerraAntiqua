@@ -1,8 +1,8 @@
 package com.mr_trousers.terraantiqua.common.registry;
 
+import com.mr_trousers.terraantiqua.common.blockentities.AntiquaFirepitBlockEntity;
 import com.mr_trousers.terraantiqua.common.blocks.devices.AntiquaFirepitBlock;
 import net.dries007.tfc.common.TFCItemGroup;
-import net.dries007.tfc.common.blockentities.AbstractFirepitBlockEntity;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.TFCBlockStateProperties;
 import net.dries007.tfc.common.blocks.TFCMaterials;
@@ -30,7 +30,7 @@ public class AntiquaBlocks {
 
 
     //TFC overwrites
-    public static final RegistryObject<Block> FIREPIT = BLOCKS.register("firepit", () -> new AntiquaFirepitBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.DIRT).strength(0.4F, 0.4F).sound(SoundType.NETHER_WART).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREPIT).<AbstractFirepitBlockEntity<?>>serverTicks(AbstractFirepitBlockEntity::serverTick)));
+    public static final RegistryObject<Block> FIREPIT = BLOCKS.register("firepit", () -> new AntiquaFirepitBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.DIRT).strength(0.4F, 0.4F).sound(SoundType.NETHER_WART).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREPIT).<AntiquaFirepitBlockEntity>serverTicks(AntiquaFirepitBlockEntity::serverTick)));
 
     public static final RegistryObject<Item> FIREPIT_ITEM = AntiquaItems.ITEMS.register("firepit", () -> new BlockItem(FIREPIT.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
 
