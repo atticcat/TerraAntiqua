@@ -142,7 +142,7 @@ dependencies {
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
-     implementation fg.deobf("net.dries007.tfc:TerraFirmaCraft-Forge-1.18.1:2.0.8-alpha")
+     implementation fg.deobf("net.dries007.tfc:TerraFirmaCraft-Forge-1.18.1:2.0.9-alpha")
     // runtimeOnly files('libs/TerraFirmaCraft-Forge-1.17.1-2.0.0-alpha.jar')
 
     // For more info...

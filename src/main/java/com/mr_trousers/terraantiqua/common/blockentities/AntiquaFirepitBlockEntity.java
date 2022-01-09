@@ -86,7 +86,7 @@ public class AntiquaFirepitBlockEntity extends AbstractFirepitBlockEntity<ItemSt
 
     public AntiquaFirepitBlockEntity(BlockPos pos, BlockState state)
     {
-        super(AntiquaBlockEntities.FIREPIT.get(), pos, state, defaultInventory(7), NAME);
+        super(AntiquaBlockEntities.FIREPIT.get(), pos, state, defaultInventory(6), NAME);
 
         woodAshWaste = 0;
         ashTicks = 0;

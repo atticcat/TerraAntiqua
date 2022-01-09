@@ -21,6 +21,7 @@ build
 eclipse
 run
 libs
+photoshop
 
 # Files from Forge MDK
 forge*changelog.txt

@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 @Mod(TerraAntiqua.MODID)
 public class TerraAntiqua {
     public static final String MODID = "terraantiqua";
-    // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
     public TerraAntiqua() {

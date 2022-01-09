@@ -1,6 +1,8 @@
 package com.mr_trousers.terraantiqua.common.registry;
 
 import net.dries007.tfc.common.TFCItemGroup;
+
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -18,6 +20,11 @@ public class AntiquaItems {
     public static final RegistryObject<Item> WET_MUDBRICK = ITEMS.register("ceramic/wet_mudbrick", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MUDBRICK = ITEMS.register("ceramic/mudbrick", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MUDBRICKS = ITEMS.register("ceramic/mudbricks", () -> new Item(new Item.Properties()));
+
+    //devices
+    public static final RegistryObject<Item> FIREPIT = ITEMS.register("firepit", () -> new BlockItem(AntiquaBlocks.FIREPIT.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
+    public static final RegistryObject<Item> FIREMOUTH = ITEMS.register("firemouth", () -> new BlockItem(AntiquaBlocks.FIREMOUTH.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
+    public static final RegistryObject<Item> WELLHOLE = ITEMS.register("wellhole", () -> new BlockItem(AntiquaBlocks.WELLHOLE.get(), new Item.Properties().tab(MISC)));
 
     //ores
     public static final RegistryObject<Item> POOR_GALENA = ITEMS.register("ore/poor_galena", () -> new Item(new Item.Properties().tab(TFCItemGroup.ORES)));

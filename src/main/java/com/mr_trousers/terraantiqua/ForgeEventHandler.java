@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 
+import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
 import com.mr_trousers.terraantiqua.common.registry.AntiquaBlocks;
 import net.dries007.tfc.common.blockentities.AbstractFirepitBlockEntity;
 import net.dries007.tfc.util.events.StartFireEvent;
@@ -37,6 +38,14 @@ public class ForgeEventHandler
         {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof AbstractFirepitBlockEntity<?> firepit && firepit.light(state))
+            {
+                event.setCanceled(true);
+            }
+        }
+        else if (block == AntiquaBlocks.FIREMOUTH.get())
+        {
+            final BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof FiremouthBlockEntity firemouth && firemouth.tryLight(state))
             {
                 event.setCanceled(true);
             }

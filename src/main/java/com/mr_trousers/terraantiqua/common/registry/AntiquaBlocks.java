@@ -1,8 +1,13 @@
 package com.mr_trousers.terraantiqua.common.registry;
 
 import com.mr_trousers.terraantiqua.common.blockentities.AntiquaFirepitBlockEntity;
+import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
+import com.mr_trousers.terraantiqua.common.blockentities.WellholeBlockEntity;
 import com.mr_trousers.terraantiqua.common.blocks.devices.AntiquaFirepitBlock;
+import com.mr_trousers.terraantiqua.common.blocks.devices.FiremouthBlock;
+import com.mr_trousers.terraantiqua.common.blocks.devices.WellholeBlock;
 import net.dries007.tfc.common.TFCItemGroup;
+import net.dries007.tfc.common.blockentities.TFCBlockEntities;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.TFCBlockStateProperties;
 import net.dries007.tfc.common.blocks.TFCMaterials;
@@ -28,10 +33,8 @@ public class AntiquaBlocks {
     public static final RegistryObject<LiquidBlock> MOLTEN_LEAD = BLOCKS.register("fluid/metal/lead", () -> new LiquidBlock(AntiquaFluids.MOLTEN_LEAD.getSecond(), BlockBehaviour.Properties.of(TFCMaterials.MOLTEN_METAL).noCollission().strength(100f).noDrops()));
     public static final RegistryObject<LiquidBlock> MOLTEN_PEWTER = BLOCKS.register("fluid/metal/pewter", () -> new LiquidBlock(AntiquaFluids.MOLTEN_PEWTER.getSecond(), BlockBehaviour.Properties.of(TFCMaterials.MOLTEN_METAL).noCollission().strength(100f).noDrops()));
 
-
-    //TFC overwrites
+    public static final RegistryObject<Block> FIREMOUTH = BLOCKS.register("firemouth", () -> new FiremouthBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREMOUTH)));
+    public static final RegistryObject<Block> WELLHOLE = BLOCKS.register("wellhole", () -> new WellholeBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion().randomTicks()).blockEntity(AntiquaBlockEntities.WELLHOLE).<WellholeBlockEntity>serverTicks(WellholeBlockEntity::serverTick)));
+    //TFC replacements
     public static final RegistryObject<Block> FIREPIT = BLOCKS.register("firepit", () -> new AntiquaFirepitBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.DIRT).strength(0.4F, 0.4F).sound(SoundType.NETHER_WART).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREPIT).<AntiquaFirepitBlockEntity>serverTicks(AntiquaFirepitBlockEntity::serverTick)));
-
-    public static final RegistryObject<Item> FIREPIT_ITEM = AntiquaItems.ITEMS.register("firepit", () -> new BlockItem(FIREPIT.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
-
 }
