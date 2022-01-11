@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -52,10 +53,18 @@ public class FiremouthBlock extends DeviceBlock
         FiremouthBlockEntity firemouth = Helpers.getBlockEntity(level, pos, FiremouthBlockEntity.class);
         if (firemouth != null)
         {
-            WellholeBlockEntity wellhole = firemouth.getWellhole();
-            if (wellhole != null && WellholeBlock.isValid(level, wellhole.getBlockPos()))
+            BlockPos wellhole = firemouth.getWellhole();
+            if (wellhole != null)
             {
-                LOGGER.info("firemouth used successfully");
+                if (WellholeBlock.isValid(level, wellhole))
+                {
+                    LOGGER.info("firemouth structure valid");
+                }
+                BlockEntity entity = level.getBlockEntity(wellhole);
+                if (entity instanceof WellholeBlockEntity)
+                {
+                    LOGGER.info("firemouth has a wellhole");
+                }
                 return InteractionResult.SUCCESS;
             }
         }
@@ -68,5 +77,26 @@ public class FiremouthBlock extends DeviceBlock
     public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving)
+    {
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity instanceof FiremouthBlockEntity firemouth)
+        {
+            firemouth.searchWellholes(level, pos);
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
+    {
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity instanceof FiremouthBlockEntity firemouth)
+        {
+            firemouth.removeFromWellhole(pos);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 }

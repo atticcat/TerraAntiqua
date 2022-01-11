@@ -29,14 +29,14 @@ public class ForgeEventHandler
 
     public static void onFireStart(StartFireEvent event)
     {
-        Level world = event.getLevel();
+        Level level = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState state = event.getState();
         Block block = state.getBlock();
 
         if (block == AntiquaBlocks.FIREPIT.get())
         {
-            final BlockEntity entity = world.getBlockEntity(pos);
+            final BlockEntity entity = level.getBlockEntity(pos);
             if (entity instanceof AbstractFirepitBlockEntity<?> firepit && firepit.light(state))
             {
                 event.setCanceled(true);
@@ -44,8 +44,8 @@ public class ForgeEventHandler
         }
         else if (block == AntiquaBlocks.FIREMOUTH.get())
         {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof FiremouthBlockEntity firemouth && firemouth.tryLight(state))
+            final BlockEntity entity = level.getBlockEntity(pos);
+            if (entity instanceof FiremouthBlockEntity firemouth && firemouth.tryLight(level, state))
             {
                 event.setCanceled(true);
             }

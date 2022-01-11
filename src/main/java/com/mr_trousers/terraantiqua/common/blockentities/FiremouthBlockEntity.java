@@ -1,14 +1,19 @@
 package com.mr_trousers.terraantiqua.common.blockentities;
 
+import java.util.Objects;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
 import com.mr_trousers.terraantiqua.common.blocks.devices.FiremouthBlock;
 import com.mr_trousers.terraantiqua.common.registry.AntiquaBlockEntities;
+import com.mr_trousers.terraantiqua.common.registry.AntiquaBlocks;
 import net.dries007.tfc.common.blockentities.InventoryBlockEntity;
 import net.dries007.tfc.util.Helpers;
 
@@ -17,7 +22,7 @@ import static com.mr_trousers.terraantiqua.TerraAntiqua.MODID;
 
 public class FiremouthBlockEntity extends InventoryBlockEntity<ItemStackHandler>
 {
-    private WellholeBlockEntity wellhole;
+    private BlockPos wellholePos;
     private static final Component NAME = new TranslatableComponent(MODID + ".tile_entity.firemouth");
 
     public FiremouthBlockEntity(BlockPos pos, BlockState state)
@@ -25,21 +30,70 @@ public class FiremouthBlockEntity extends InventoryBlockEntity<ItemStackHandler>
         super(AntiquaBlockEntities.FIREMOUTH.get(), pos, state, defaultInventory(1), NAME);
     }
 
-    public void setWellhole(Level level, BlockPos pos) { this.wellhole = Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class); }
+    public void searchWellholes(Level level, BlockPos center)
+    {
+        var mutable = new BlockPos.MutableBlockPos();
+        for (var face : Direction.Plane.HORIZONTAL)
+        {
+            mutable.set(center).move(face, 2);
+            triggerIfWellhole(mutable, level);
+            triggerIfWellhole(mutable.move(face.getClockWise()), level);
+            triggerIfWellhole(mutable.move(face.getCounterClockWise(), 2), level);
+        }
+    }
 
-    public WellholeBlockEntity getWellhole() { return wellhole; }
+    private void triggerIfWellhole(BlockPos.MutableBlockPos pos, Level level)
+    {
+        BlockState state = level.getBlockState(pos);
+        if (state.is(AntiquaBlocks.WELLHOLE.get()))
+        {
+            Objects.requireNonNull(Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class)).linkFiremouths(level, pos);
+        }
+    }
+
+    public void removeFromWellhole(BlockPos pos)
+    {
+        if (wellholePos != null)
+        {
+            assert level != null;
+            BlockEntity entity = level.getBlockEntity(wellholePos);
+            if (entity instanceof WellholeBlockEntity wellhole)
+            {
+                wellhole.removeFiremouth(pos);
+            }
+        }
+    }
+
+    public void setWellhole(BlockPos pos) { wellholePos = pos; }
+
+    public void unsetWellhole() { wellholePos = null; }
+
+    public BlockPos getWellhole() { return wellholePos; }
 
     //tell core block to try to start firing
-    public boolean tryLight(BlockState state)
+    public boolean tryLight(Level level, BlockState state)
     {
-        wellhole.startFiring(state);
-        return true;
+        if (wellholePos != null)
+        {
+            BlockEntity entity = level.getBlockEntity(wellholePos);
+            if (entity instanceof WellholeBlockEntity wellhole)
+            {
+                return wellhole.startFiring(state);
+            }
+        }
+        return false;
     }
 
     //light this firemouth
-    protected void light(BlockState state)
+    public void light(BlockState state)
     {
         assert level != null;
         level.setBlockAndUpdate(worldPosition, state.setValue(FiremouthBlock.LIT, true));
+    }
+
+    public void extinguish(BlockState state)
+    {
+        assert level != null;
+        level.setBlockAndUpdate(worldPosition, state.setValue(FiremouthBlock.LIT, false));
     }
 }

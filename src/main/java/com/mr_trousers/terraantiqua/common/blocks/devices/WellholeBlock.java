@@ -12,10 +12,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -28,6 +31,7 @@ import net.dries007.tfc.common.blocks.ExtendedBlock;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.MultiBlock;
+import org.jetbrains.annotations.Nullable;
 
 public class WellholeBlock extends ExtendedBlock
 {
@@ -69,36 +73,18 @@ public class WellholeBlock extends ExtendedBlock
         super(properties);
     }
 
-    public HashSet<BlockPos> linkFiremouths(Level level, BlockPos center) {
-        var firemouths = new HashSet<BlockPos>();
-        var mutable = new BlockPos.MutableBlockPos();
-        for (var face : Direction.Plane.HORIZONTAL) {
-            mutable.set(center).move(face, 2);
-            addIfFiremouth(center, mutable, firemouths, level);
-            addIfFiremouth(center, mutable.move(face.getClockWise()), firemouths, level);
-            // Move two because we moved it clockwise on the previous line
-            addIfFiremouth(center, mutable.move(face.getCounterClockWise(), 2), firemouths, level);
-        }
-        return firemouths;
-    }
-
-    private void addIfFiremouth(BlockPos center, BlockPos.MutableBlockPos pos, HashSet<BlockPos> firemouths, Level level) {
-        BlockState state = level.getBlockState(pos);
-        if (state.is(AntiquaBlocks.FIREMOUTH.get()))
-        {
-            firemouths.add(pos.immutable());
-            Objects.requireNonNull(Helpers.getBlockEntity(level, pos, FiremouthBlockEntity.class)).setWellhole(level, center);
-        }
-    }
-
     @Override
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
         WellholeBlockEntity wellhole = Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class);
-        if (wellhole != null && isValid(level, pos))
+        if (wellhole != null)
         {
-            LOGGER.info("wellhole used successfully");
+            if (isValid(level, pos))
+            {
+                LOGGER.info("wellhole structure valid");
+            }
+            LOGGER.info(wellhole.stringFiremouths());
             return InteractionResult.SUCCESS;
         }
         LOGGER.info("wellhole used unsuccessfully");
@@ -118,14 +104,41 @@ public class WellholeBlock extends ExtendedBlock
 
     @Override
     @SuppressWarnings("deprecation")
-    public void onPlace(BlockState p_60566_, Level p_60567_, BlockPos p_60568_, BlockState p_60569_, boolean p_60570_)
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving)
     {
-        super.onPlace(p_60566_, p_60567_, p_60568_, p_60569_, p_60570_);
+        WellholeBlockEntity wellhole = Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class);
+        LOGGER.info("wellhole onPlace");
+        if (wellhole != null)
+        {
+            LOGGER.info("wellhole onPlace 2");
+            wellhole.linkFiremouths(level, pos);
+        }
     }
 
     @Override
-    public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_)
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
-        super.onRemove(p_60515_, p_60516_, p_60517_, p_60518_, p_60519_);
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity != null)
+        {
+            LOGGER.info("wellhole onPlace");
+            if (entity instanceof WellholeBlockEntity wellhole)
+            {
+                LOGGER.info("wellhole onPlace 2");
+                wellhole.linkFiremouths(level, pos);
+            }
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state2, boolean bool)
+    {
+        LOGGER.info("wellhole onRemove");
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity instanceof WellholeBlockEntity wellhole)
+        {
+            wellhole.unlinkFiremouths(level);
+        }
     }
 }
