@@ -42,6 +42,7 @@ public class WellholeBlockEntity extends TFCBlockEntity
     public WellholeBlockEntity(BlockPos pos, BlockState state)
     {
         super(AntiquaBlockEntities.WELLHOLE.get(), pos, state);
+        LOGGER.info("I'm constructing a wellhole entity");
     }
 
     @Override
@@ -90,10 +91,12 @@ public class WellholeBlockEntity extends TFCBlockEntity
 
     public void linkFiremouths(Level level, BlockPos center)
     {
+        LOGGER.info("wellhole linking firemouths");
         var firemouths = new HashSet<BlockPos>();
         var mutable = new BlockPos.MutableBlockPos();
         for (var face : Direction.Plane.HORIZONTAL)
         {
+            LOGGER.info("wellhole linking firemouths: checking "+face.toString());
             mutable.set(center).move(face, 2);
             addIfFiremouth(center, mutable, firemouths, level, face);
             addIfFiremouth(center, mutable.move(face.getClockWise()), firemouths, level, face);
@@ -108,6 +111,7 @@ public class WellholeBlockEntity extends TFCBlockEntity
         BlockState state = level.getBlockState(pos);
         if (state.is(AntiquaBlocks.FIREMOUTH.get()) && state.getValue(FiremouthBlock.FACING) == face)
         {
+            LOGGER.info("wellhole found a firemouth to link");
             firemouths.add(pos.immutable());
             Objects.requireNonNull(Helpers.getBlockEntity(level, pos, FiremouthBlockEntity.class)).setWellhole(center);
         }
@@ -115,15 +119,18 @@ public class WellholeBlockEntity extends TFCBlockEntity
 
     public void unlinkFiremouths(Level level)
     {
-        for (BlockPos firemouthPos : firemouths)
+        if (firemouths != null)
         {
-            if (firemouthPos != null)
+            for (BlockPos firemouthPos : firemouths)
             {
-                assert level != null;
-                BlockEntity entity = level.getBlockEntity(firemouthPos);
-                if (entity instanceof FiremouthBlockEntity firemouth)
+                if (firemouthPos != null)
                 {
-                    firemouth.unsetWellhole();
+                    assert level != null;
+                    BlockEntity entity = level.getBlockEntity(firemouthPos);
+                    if (entity instanceof FiremouthBlockEntity firemouth)
+                    {
+                        firemouth.unsetWellhole();
+                    }
                 }
             }
         }

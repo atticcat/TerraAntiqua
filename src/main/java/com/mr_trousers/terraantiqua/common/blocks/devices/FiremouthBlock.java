@@ -17,6 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
 import com.mr_trousers.terraantiqua.common.blockentities.WellholeBlockEntity;
+import net.dries007.tfc.common.blocks.EntityBlockExtension;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.DeviceBlock;
 import net.dries007.tfc.util.Helpers;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.core.Direction.NORTH;
 
-public class FiremouthBlock extends DeviceBlock
+public class FiremouthBlock extends DeviceBlock implements EntityBlockExtension
 {
 
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -76,12 +77,13 @@ public class FiremouthBlock extends DeviceBlock
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context)
     {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving)
     {
+        LOGGER.info("firemouth onPlace");
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof FiremouthBlockEntity firemouth)
         {
@@ -92,6 +94,7 @@ public class FiremouthBlock extends DeviceBlock
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
     {
+        LOGGER.info("firemouth on Remove");
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof FiremouthBlockEntity firemouth)
         {

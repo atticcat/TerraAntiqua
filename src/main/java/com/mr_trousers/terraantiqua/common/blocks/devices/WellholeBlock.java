@@ -27,13 +27,14 @@ import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
 import com.mr_trousers.terraantiqua.common.blockentities.WellholeBlockEntity;
 import com.mr_trousers.terraantiqua.common.registry.AntiquaBlocks;
 import net.dries007.tfc.common.TFCTags;
+import net.dries007.tfc.common.blocks.EntityBlockExtension;
 import net.dries007.tfc.common.blocks.ExtendedBlock;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.util.Helpers;
 import net.dries007.tfc.util.MultiBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class WellholeBlock extends ExtendedBlock
+public class WellholeBlock extends ExtendedBlock implements EntityBlockExtension
 {
     private static final MultiBlock KILN_MULTIBLOCK;
 
@@ -115,20 +116,20 @@ public class WellholeBlock extends ExtendedBlock
         }
     }
 
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
-    {
-        BlockEntity entity = level.getBlockEntity(pos);
-        if (entity != null)
-        {
-            LOGGER.info("wellhole onPlace");
-            if (entity instanceof WellholeBlockEntity wellhole)
-            {
-                LOGGER.info("wellhole onPlace 2");
-                wellhole.linkFiremouths(level, pos);
-            }
-        }
-    }
+//    @Override
+//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+//    {
+//        BlockEntity entity = level.getBlockEntity(pos);
+//        if (entity != null)
+//        {
+//            LOGGER.info("wellhole onPlace");
+//            if (entity instanceof WellholeBlockEntity wellhole)
+//            {
+//                LOGGER.info("wellhole onPlace 2");
+//                wellhole.linkFiremouths(level, pos);
+//            }
+//        }
+//    }
 
     @Override
     @SuppressWarnings("deprecation")
