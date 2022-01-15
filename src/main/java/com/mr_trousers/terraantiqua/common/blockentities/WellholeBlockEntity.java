@@ -3,10 +3,13 @@ package com.mr_trousers.terraantiqua.common.blockentities;
 import java.util.HashSet;
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,14 +52,7 @@ public class WellholeBlockEntity extends TFCBlockEntity
     protected void saveAdditional(CompoundTag nbt)
     {
         ListTag posList = new ListTag();
-        for (BlockPos pos : firemouths)
-        {
-            CompoundTag posTag = new CompoundTag();
-            posTag.putInt("x", pos.getX());
-            posTag.putInt("y", pos.getY());
-            posTag.putInt("z", pos.getZ());
-            posList.add(posTag);
-        }
+        for (BlockPos pos : firemouths) { posList.add(NbtUtils.writeBlockPos(pos)); }
         nbt.put("firemouths", posList);
         nbt.putInt("burnTicks", burnTicks);
         nbt.putBoolean("isLit", isLit);
@@ -71,11 +67,7 @@ public class WellholeBlockEntity extends TFCBlockEntity
         ListTag posList = nbt.getList("firemouths", Tag.TAG_COMPOUND);
         for (Tag tag : posList)
         {
-            if (tag instanceof CompoundTag posTag)
-            {
-                BlockPos pos = new BlockPos(posTag.getInt("x"), posTag.getInt("y"), posTag.getInt("z"));
-                firemouths.add(pos);
-            }
+            if (tag instanceof CompoundTag posTag) { firemouths.add(NbtUtils.readBlockPos(posTag)); }
         }
         this.firemouths = firemouths;
         burnTicks = nbt.getInt("burnTicks");

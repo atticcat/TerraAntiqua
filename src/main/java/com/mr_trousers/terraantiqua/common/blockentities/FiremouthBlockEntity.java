@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
@@ -29,6 +31,22 @@ public class FiremouthBlockEntity extends InventoryBlockEntity<ItemStackHandler>
     {
         super(AntiquaBlockEntities.FIREMOUTH.get(), pos, state, defaultInventory(1), NAME);
         LOGGER.info("I am constructing a firemouth entity");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag nbt)
+    {
+        if (wellholePos != null) { nbt.put("wellhole", NbtUtils.writeBlockPos(wellholePos)); }
+        super.saveAdditional(nbt);
+    }
+
+    @Override
+    public void load(CompoundTag nbt)
+    {
+        CompoundTag wellholeTag = nbt.getCompound("wellhole");
+        if (!wellholeTag.isEmpty()) { wellholePos = NbtUtils.readBlockPos(wellholeTag); }
+        else { wellholePos = null; }
+        super.load(nbt);
     }
 
     public void searchWellholes(Level level, BlockPos center)
@@ -67,11 +85,20 @@ public class FiremouthBlockEntity extends InventoryBlockEntity<ItemStackHandler>
         }
     }
 
-    public void setWellhole(BlockPos pos) { wellholePos = pos; }
+    public void setWellhole(BlockPos pos) {
+        assert level != null;
+        LOGGER.info("firemouth "+hashCode()+" setting a wellhole of "+level.getBlockState(pos)+" at "+pos.toShortString());
+        wellholePos = pos;
+        LOGGER.info("firemouth wellhole is now "+wellholePos.toShortString());
+    }
 
     public void unsetWellhole() { wellholePos = null; }
 
-    public BlockPos getWellhole() { return wellholePos; }
+    public BlockPos getWellhole() {
+        assert level != null;
+        LOGGER.info("firemouth "+hashCode()+" getting a wellhole at "+wellholePos.toShortString());
+        return wellholePos;
+    }
 
     //tell core block to try to start firing
     public boolean tryLight(Level level, BlockState state)

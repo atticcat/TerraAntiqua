@@ -79,7 +79,7 @@ public class WellholeBlock extends ExtendedBlock implements EntityBlockExtension
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
         WellholeBlockEntity wellhole = Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class);
-        if (wellhole != null)
+        if (wellhole != null && !level.isClientSide())
         {
             if (isValid(level, pos))
             {
@@ -109,7 +109,7 @@ public class WellholeBlock extends ExtendedBlock implements EntityBlockExtension
     {
         WellholeBlockEntity wellhole = Helpers.getBlockEntity(level, pos, WellholeBlockEntity.class);
         LOGGER.info("wellhole onPlace");
-        if (wellhole != null)
+        if (wellhole != null && !level.isClientSide())
         {
             LOGGER.info("wellhole onPlace 2");
             wellhole.linkFiremouths(level, pos);
@@ -137,7 +137,7 @@ public class WellholeBlock extends ExtendedBlock implements EntityBlockExtension
     {
         LOGGER.info("wellhole onRemove");
         BlockEntity entity = level.getBlockEntity(pos);
-        if (entity instanceof WellholeBlockEntity wellhole)
+        if (entity instanceof WellholeBlockEntity wellhole && !level.isClientSide())
         {
             wellhole.unlinkFiremouths(level);
         }
