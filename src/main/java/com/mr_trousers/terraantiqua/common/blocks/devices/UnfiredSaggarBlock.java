@@ -9,17 +9,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import com.mr_trousers.terraantiqua.common.blocks.AntiquaBlockStateProperties;
-import net.dries007.tfc.common.blocks.ExtendedProperties;
-import net.dries007.tfc.common.blocks.devices.DeviceBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class SaggarBlock extends DeviceBlock
+public class UnfiredSaggarBlock extends Block
 {
     public static final IntegerProperty ROTATION = AntiquaBlockStateProperties.ROTATION_4;
 
-    public SaggarBlock(ExtendedProperties properties)
+    public UnfiredSaggarBlock(Properties properties)
     {
-        super(properties, InventoryRemoveBehavior.DROP);
+        super(properties);
         registerDefaultState(getStateDefinition().any().setValue(ROTATION, 0));
     }
 

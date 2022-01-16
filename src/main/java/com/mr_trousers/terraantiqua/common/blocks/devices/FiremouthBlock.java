@@ -18,6 +18,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
 import com.mr_trousers.terraantiqua.common.blockentities.WellholeBlockEntity;
+import com.mr_trousers.terraantiqua.common.registry.AntiquaBlocks;
+import net.dries007.tfc.common.TFCTags;
 import net.dries007.tfc.common.blocks.EntityBlockExtension;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.devices.DeviceBlock;
@@ -57,27 +59,16 @@ public class FiremouthBlock extends DeviceBlock implements EntityBlockExtension
         if (firemouth != null && !level.isClientSide())
         {
             final ItemStack stack = player.getItemInHand(hand);
-            // todo: remove this, add items that return successful interaction instead
-            if (stack.getItem() == TFCItems.FIRESTARTER.get()) { return InteractionResult.PASS; }
-            LOGGER.info("firemouth entity found");
-            BlockPos wellhole = firemouth.getWellhole();
-            if (wellhole != null)
-            {
-                LOGGER.info("firemouth entity has a wellhole pos");
-                if (WellholeBlock.isValid(level, wellhole))
-                {
-                    LOGGER.info("firemouth structure valid");
-                }
-                BlockEntity entity = level.getBlockEntity(wellhole);
-                if (entity instanceof WellholeBlockEntity)
-                {
-                    LOGGER.info("firemouth has a wellhole");
-                }
-                LOGGER.info("wellhole pos "+wellhole.toShortString()+" and "+level.getBlockState(wellhole)+" type");
+            // todo: add other possible fuels, check state, and/or open gui
+            if (TFCTags.Items.FIREPIT_LOGS.contains(stack.getItem())) {
                 return InteractionResult.SUCCESS;
             }
+//            BlockPos wellhole = firemouth.getWellhole();
+//            if (wellhole != null && level.getBlockEntity(wellhole) instanceof WellholeBlockEntity && WellholeBlock.isValid(level, wellhole))
+//            {
+//                //do stuff
+//            }
         }
-        LOGGER.info("firemouth used unsuccessfully");
         return InteractionResult.PASS;
     }
 
@@ -91,9 +82,8 @@ public class FiremouthBlock extends DeviceBlock implements EntityBlockExtension
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving)
     {
-        LOGGER.info("firemouth onPlace");
         BlockEntity entity = level.getBlockEntity(pos);
-        if (entity instanceof FiremouthBlockEntity firemouth && !level.isClientSide())
+        if (entity instanceof FiremouthBlockEntity firemouth && !level.isClientSide() && !oldState.is(AntiquaBlocks.FIREMOUTH.get()))
         {
             firemouth.searchWellholes(level, pos);
         }
@@ -102,9 +92,8 @@ public class FiremouthBlock extends DeviceBlock implements EntityBlockExtension
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        LOGGER.info("firemouth on Remove");
         BlockEntity entity = level.getBlockEntity(pos);
-        if (entity instanceof FiremouthBlockEntity firemouth && !level.isClientSide())
+        if (entity instanceof FiremouthBlockEntity firemouth && !level.isClientSide() && !newState.is(AntiquaBlocks.FIREMOUTH.get()))
         {
             firemouth.removeFromWellhole(pos);
         }

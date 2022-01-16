@@ -1,18 +1,11 @@
 package com.mr_trousers.terraantiqua.common.registry;
 
 import com.mr_trousers.terraantiqua.common.blockentities.AntiquaFirepitBlockEntity;
-import com.mr_trousers.terraantiqua.common.blockentities.FiremouthBlockEntity;
 import com.mr_trousers.terraantiqua.common.blockentities.WellholeBlockEntity;
-import com.mr_trousers.terraantiqua.common.blocks.devices.AntiquaFirepitBlock;
-import com.mr_trousers.terraantiqua.common.blocks.devices.FiremouthBlock;
-import com.mr_trousers.terraantiqua.common.blocks.devices.WellholeBlock;
-import net.dries007.tfc.common.TFCItemGroup;
-import net.dries007.tfc.common.blockentities.TFCBlockEntities;
+import com.mr_trousers.terraantiqua.common.blocks.devices.*;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.TFCBlockStateProperties;
 import net.dries007.tfc.common.blocks.TFCMaterials;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -35,6 +28,8 @@ public class AntiquaBlocks {
 
     public static final RegistryObject<Block> FIREMOUTH = BLOCKS.register("firemouth", () -> new FiremouthBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREMOUTH)));
     public static final RegistryObject<Block> WELLHOLE = BLOCKS.register("wellhole", () -> new WellholeBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion().randomTicks()).blockEntity(AntiquaBlockEntities.WELLHOLE).<WellholeBlockEntity>serverTicks(WellholeBlockEntity::serverTick)));
+    public static final RegistryObject<Block> SAGGAR = BLOCKS.register("saggar", () -> new SaggarBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion()).blockEntity(AntiquaBlockEntities.SAGGAR)));
+    public static final RegistryObject<Block> UNFIRED_SAGGAR = BLOCKS.register("unfired_saggar", () -> new UnfiredSaggarBlock(BlockBehaviour.Properties.of(Material.STONE).strength(0.5F, 2.0F).sound(SoundType.BASALT).noOcclusion()));
     //TFC replacements
     public static final RegistryObject<Block> FIREPIT = BLOCKS.register("firepit", () -> new AntiquaFirepitBlock(ExtendedProperties.of(BlockBehaviour.Properties.of(Material.DIRT).strength(0.4F, 0.4F).sound(SoundType.NETHER_WART).noOcclusion().lightLevel((state) -> state.getValue(TFCBlockStateProperties.LIT) ? 15 : 0)).blockEntity(AntiquaBlockEntities.FIREPIT).<AntiquaFirepitBlockEntity>serverTicks(AntiquaFirepitBlockEntity::serverTick)));
 }

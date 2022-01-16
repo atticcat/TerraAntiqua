@@ -24,7 +24,9 @@ public class AntiquaItems {
     //devices
     public static final RegistryObject<Item> FIREPIT = ITEMS.register("firepit", () -> new BlockItem(AntiquaBlocks.FIREPIT.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
     public static final RegistryObject<Item> FIREMOUTH = ITEMS.register("firemouth", () -> new BlockItem(AntiquaBlocks.FIREMOUTH.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
-    public static final RegistryObject<Item> WELLHOLE = ITEMS.register("wellhole", () -> new BlockItem(AntiquaBlocks.WELLHOLE.get(), new Item.Properties().tab(MISC)));
+    public static final RegistryObject<Item> WELLHOLE = ITEMS.register("wellhole", () -> new BlockItem(AntiquaBlocks.WELLHOLE.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
+    public static final RegistryObject<Item> SAGGAR = ITEMS.register("saggar", () -> new BlockItem(AntiquaBlocks.SAGGAR.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
+    public static final RegistryObject<Item> UNFIRED_SAGGAR = ITEMS.register("unfired_saggar", () -> new BlockItem(AntiquaBlocks.UNFIRED_SAGGAR.get(), new Item.Properties().tab(TFCItemGroup.MISC)));
 
     //ores
     public static final RegistryObject<Item> POOR_GALENA = ITEMS.register("ore/poor_galena", () -> new Item(new Item.Properties().tab(TFCItemGroup.ORES)));

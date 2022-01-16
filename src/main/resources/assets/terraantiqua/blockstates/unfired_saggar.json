@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "rotation=0": {
+      "model": "terraantiqua:block/saggar/unfired_saggar"
+    },
+    "rotation=1": {
+      "model": "terraantiqua:block/saggar/unfired_saggar_angled"
+    },
+    "rotation=2": {
+      "model": "terraantiqua:block/saggar/unfired_saggar",
+      "y": 90
+    },
+    "rotation=3": {
+      "model": "terraantiqua:block/saggar/unfired_saggar_angled",
+      "y": 90
+    }
+  }
+}

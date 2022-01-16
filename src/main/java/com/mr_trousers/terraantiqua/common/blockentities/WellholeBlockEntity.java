@@ -3,8 +3,6 @@ package com.mr_trousers.terraantiqua.common.blockentities;
 import java.util.HashSet;
 import java.util.Objects;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +14,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.mr_trousers.terraantiqua.common.blocks.devices.FiremouthBlock;
+import com.mr_trousers.terraantiqua.common.blocks.devices.SaggarBlock;
+import com.mr_trousers.terraantiqua.common.blocks.devices.UnfiredSaggarBlock;
+import com.mr_trousers.terraantiqua.common.blocks.devices.WellholeBlock;
 import com.mr_trousers.terraantiqua.common.registry.AntiquaBlockEntities;
 import com.mr_trousers.terraantiqua.common.registry.AntiquaBlocks;
 import net.dries007.tfc.common.blockentities.TFCBlockEntity;
@@ -23,6 +24,14 @@ import net.dries007.tfc.util.Helpers;
 
 public class WellholeBlockEntity extends TFCBlockEntity
 {
+    /*
+     * earthenware 800C
+     * stoneware 1200-1300C
+     * porcelain 1300-1350C
+     */
+    private static final int logFiringTemperature = 1000;
+    private static final int coalFiringTemperature = 1300;
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, WellholeBlockEntity wellhole)
     {
         if (wellhole.isLit)
@@ -45,7 +54,6 @@ public class WellholeBlockEntity extends TFCBlockEntity
     public WellholeBlockEntity(BlockPos pos, BlockState state)
     {
         super(AntiquaBlockEntities.WELLHOLE.get(), pos, state);
-        LOGGER.info("I'm constructing a wellhole entity");
     }
 
     @Override
@@ -83,12 +91,10 @@ public class WellholeBlockEntity extends TFCBlockEntity
 
     public void linkFiremouths(Level level, BlockPos center)
     {
-        LOGGER.info("wellhole linking firemouths");
         var firemouths = new HashSet<BlockPos>();
         var mutable = new BlockPos.MutableBlockPos();
         for (var face : Direction.Plane.HORIZONTAL)
         {
-            LOGGER.info("wellhole linking firemouths: checking "+face.toString());
             mutable.set(center).move(face, 2);
             addIfFiremouth(center, mutable, firemouths, level, face);
             addIfFiremouth(center, mutable.move(face.getClockWise()), firemouths, level, face);
@@ -103,9 +109,8 @@ public class WellholeBlockEntity extends TFCBlockEntity
         BlockState state = level.getBlockState(pos);
         if (state.is(AntiquaBlocks.FIREMOUTH.get()) && state.getValue(FiremouthBlock.FACING) == face)
         {
-            LOGGER.info("wellhole found a firemouth to link");
             firemouths.add(pos.immutable());
-            Objects.requireNonNull(Helpers.getBlockEntity(level, pos, FiremouthBlockEntity.class)).setWellhole(center);
+            Objects.requireNonNull(Helpers.getBlockEntity(level, pos, FiremouthBlockEntity.class)).setWellhole(center.immutable());
         }
     }
 
@@ -135,46 +140,33 @@ public class WellholeBlockEntity extends TFCBlockEntity
 
     public boolean isLit() { return isLit; }
 
-    //todo: convert contents
-    public void finishFiring(BlockState state)
+    //todo: check if there is enough firemouth fuel for number of saggars
+    public boolean startFiring()
     {
-        for (BlockPos firemouthPos : firemouths)
+        if (WellholeBlock.isValid(level, worldPosition))
         {
-            if (firemouthPos != null)
+            for (BlockPos firemouthPos : firemouths)
             {
-                assert level != null;
-                BlockEntity entity = level.getBlockEntity(firemouthPos);
-                if (entity instanceof FiremouthBlockEntity firemouth)
+                if (firemouthPos != null)
                 {
-                    firemouth.extinguish(firemouth.getBlockState());
+                    assert level != null;
+                    BlockEntity entity = level.getBlockEntity(firemouthPos);
+                    if (entity instanceof FiremouthBlockEntity firemouth)
+                    {
+                        //todo: check if firemouth is fully fueled
+                        firemouth.light(firemouth.getBlockState());
+                    }
                 }
             }
+
+            isLit = true;
+            burnTicks += 500;
+            return true;
         }
-
-        isLit = false;
-        burnTicks = 0;
-    }
-
-    //todo: check if there are enough firemouths for amount of saggars
-    public boolean startFiring(BlockState state)
-    {
-        for (BlockPos firemouthPos : firemouths)
+        else
         {
-            if (firemouthPos != null)
-            {
-                assert level != null;
-                BlockEntity entity = level.getBlockEntity(firemouthPos);
-                if (entity instanceof FiremouthBlockEntity firemouth)
-                {
-                    //todo: check if firemouth is fully fueled
-                    firemouth.light(firemouth.getBlockState());
-                }
-            }
+            return false;
         }
-
-        isLit = true;
-        burnTicks += 100;
-        return true;
     }
 
     public void abortFiring(BlockState state)
@@ -194,5 +186,54 @@ public class WellholeBlockEntity extends TFCBlockEntity
 
         isLit = false;
         burnTicks = 0;
+    }
+
+    public void finishFiring(BlockState state)
+    {
+        for (BlockPos firemouthPos : firemouths)
+        {
+            if (firemouthPos != null)
+            {
+                assert level != null;
+                BlockEntity entity = level.getBlockEntity(firemouthPos);
+                if (entity instanceof FiremouthBlockEntity firemouth)
+                {
+                    firemouth.extinguish(firemouth.getBlockState());
+                }
+            }
+        }
+        BlockPos.MutableBlockPos mutable = worldPosition.mutable();
+        // todo: this while loop should eventually check that mutable is not a chimney block
+        int i = 0;
+        while (i < 4)
+        {
+            mutable.move(Direction.UP);
+            for (Direction d : Direction.Plane.HORIZONTAL)
+            {
+                assert level != null;
+                BlockPos pos = mutable.relative(d, 1);
+                fireBlockContent(level, pos);
+                fireBlockContent(level, pos.relative(d.getClockWise(), 1));
+            }
+            i++;
+        }
+
+        isLit = false;
+        burnTicks = 0;
+    }
+
+    private void fireBlockContent(Level level, BlockPos pos)
+    {
+        LOGGER.info("firing a block at "+pos.toShortString()+" of "+level.getBlockState(pos));
+        BlockState state = level.getBlockState(pos);
+        if (state.is(AntiquaBlocks.UNFIRED_SAGGAR.get()))
+        {
+            LOGGER.info("firing saggar at "+pos.toShortString());
+            level.setBlock(pos, AntiquaBlocks.SAGGAR.get().defaultBlockState().setValue(SaggarBlock.ROTATION, state.getValue(UnfiredSaggarBlock.ROTATION)), 3);
+        }
+        else if (state.is(AntiquaBlocks.SAGGAR.get()))
+        {
+            //todo: convert saggar contents. what the hell is a heat capability?
+        }
     }
 }
